@@ -1,0 +1,9 @@
+[Unit]
+Description=Run set_heaters every 5 minutes
+
+[Timer]
+OnUnitActiveSec=%%SET_HEATERS_RUN_INTERVAL%%
+Unit=set_heaters.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Run get_schedules every 30 minutes
+
+[Timer]
+OnUnitActiveSec=%%GET_SCHEDULES_RUN_INTERVAL%%
+Unit=get_schedules.service
+
+[Install]
+WantedBy=timers.target

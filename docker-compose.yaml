@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app_heat_gcal_controllers:
+    build: .
+    volumes:
+      - ./app:/app
+      - ./configs:/app/configs
+      - ./credentials:/app/credentials
+      - ./outputs:/app/outputs
+    entrypoint: ["python3", "main.py"]

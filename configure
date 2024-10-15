@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Configuration options
+prefix="/usr/local"
+bindir="${prefix}/bin"
+libdir="${prefix}/lib"
+includedir="${prefix}/include"
+
+# Function to display an error and exit
+die() {
+  echo "$1" >&2
+  exit 1
+}
+
+# Print a message indicating the script is configuring
+echo "Configuring the software..."
+
+# Check for required tools
+which gcc >/dev/null 2>&1 || die "Error: gcc not found. Please install it before running configure."
+
+
+	# YQ required
+	if ! command -v yq &> /dev/null; then \
+		echo "yq is not installed."; \
+    	echo "For Ubuntu / Debian, you can use: sudo apt-get install yq"; \
+		exit 1; \
+	fi
+
+	USE_COMPOSE=$(shell yq '.install.use_compose' ${INSTALL_CONFIG_FILE})
+	if [ -z "$(USE_COMPOSE)" ]; then \
+		echo "USE_COMPOSE is not defined."; \
+		exit 1; \
+	fi
+
+	USE_SYSTEMD=$(yq '.install.use_systemd' "$INSTALL_CONFIG_FILE")
+	if [ -z $(USE_SYSTEMD) ]; then \
+		echo "USE_SYSTEMD is not defined."; \
+		exit 1; \
+	fi
+
+	SET_HEATERS_RUN_INTERVAL=$(yq '.set_heaters.run_interval' "$INSTALL_CONFIG_FILE")
+	if [ -z "${SET_HEATERS_RUN_INTERVAL}" ]; then \
+		echo "SET_HEATERS_RUN_INTERVAL is not defined."; \
+		exit 1; \
+	fi
+
+	GET_SCHEDULES_RUN_INTERVAL=$(yq '.get_schedules.run_interval' "$INSTALL_CONFIG_FILE")
+	if [ -z "${GET_SCHEDULES_RUN_INTERVAL}" ]; then \
+		echo "GET_SCHEDULES_RUN_INTERVAL is not defined."; \
+		exit 1; \
+	fi
+
+	@echo "Install with docker-compose"
+	if [ -z "${USE_COMPOSE}" == "true" && command -v docker-compose &> /dev/null ]; then
+		echo "docker-compose is not installed."; \
+		exit 1; \
+	fi

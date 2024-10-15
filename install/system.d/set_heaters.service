@@ -1,0 +1,7 @@
+[Unit]
+Description=Run set_heaters Docker Compose service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/docker-compose -f %%INSTALL_PATH%%/docker-compose.yaml up set_heaters
+User=heatzy

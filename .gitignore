@@ -1,0 +1,6 @@
+credentials/*.json
+!credentials/*.example.json
+outputs/*.json
+.idea
+.venv
+__pycache__

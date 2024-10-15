@@ -1,0 +1,108 @@
+---
+default:
+  priority: 10
+  devices:
+    "Poêle dans le salon":
+      type: stove
+      mode: 'OFF'
+      sequences: []
+    living_left:
+      type: heatzy
+      mode: 'OFF'
+      sequences: []
+    living_right:
+      type: heatzy
+      mode: 'OFF'
+      sequences: []
+    bedroom_main:
+      type: heatzy
+      mode: 'OFF'
+      sequences: []
+    desk_thomas:
+      type: heatzy
+      mode: 'OFF'
+      sequences: []
+
+night:
+  priority: 1
+  devices:
+    bedroom_main:
+      mode: COMFORT
+      sequences:
+      - ALTERNATIVE_ECO_SHORT
+      - FAST_UP
+      - SLOW_DOWN
+night_guest:
+  priority: 1
+  devices:
+    bedroom_guest:
+      mode: CONFORT
+      sequences:
+      - ALTERNATIVE_ECO_SHORT
+      - FAST_UP
+      - SLOW_DOWN
+weekend:
+  priority: 2
+  devices:
+    living_left:
+      mode: CONFORT
+      sequences:
+      - ALTERNATIVE_ECO_SHORT
+    living_right:
+      mode: CONFORT
+      sequences:
+      - ALTERNATIVE_ECO_SHORT
+remote:
+  priority: 2
+  devices:
+    living_left:
+      mode: CONFORT
+      sequences:
+      - ALTERNATIVE_ECO_LONG
+    living_right:
+      mode: ECO
+      sequences:
+      - ALTERNATIVE_ECO_LONG
+morning:
+  priority: 3
+  devices:
+    living_left:
+      mode: CONFORM
+      sequences:
+      - ALTERNATIVE_ECO_SHORT
+      - FAST_UP
+    living_right:
+      mode: CONFORM
+      sequences:
+      - ALTERNATIVE_ECO_SHORT
+      - FAST_UP
+evening:
+  priority: 3
+  devices:
+    living_left:
+      mode: CONFORM
+      sequences:
+      - ALTERNATIVE_ECO_SHORT
+      - FAST_UP
+      - SLOW_DOWN
+    living_right:
+      mode: CONFORM
+      sequences:
+      - ALTERNATIVE_ECO_SHORT
+      - FAST_UP
+      - SLOW_DOWN
+holidays:
+  priority: 0
+  devices:
+    living_left:
+      mode: HGEL
+      sequences: []
+    living_right:
+      mode: HGEL
+      sequences: []
+    bedroom_main:
+      mode: HGEL
+      sequences: []
+    desk_thomas:
+      mode: HGEL
+      sequences: []

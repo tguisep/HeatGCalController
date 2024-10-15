@@ -1,0 +1,64 @@
+---
+# Default values applied
+# All devices must be defined here
+# THIS IS A EXAMPLE FILE, DEVICE NAME MUST BE ADJUSTED TO YOUR HEATZY PILOTE CONFIGURATION
+default:
+  # More a priority is high, less it is.
+  priority: 10
+  devices:
+    # heater_xyz is the name of your device defined in the app
+    heater_bedroom:
+      mode: OFF
+    heater_kitchen:
+      mode: OFF
+    heater_deskroom:
+      mode: OFF
+    heater_livroom:
+      mode: OFF
+
+# night / weekend is the mode than you must define in google calendar (title of the meeting)
+night:
+  priority: 1
+  devices:
+    heater_bedroom:
+      mode: CONFORT
+
+weekend:
+  priority: 2
+  devices:
+    heater_kitchen:
+      mode: CONFORT
+    heater_livroom:
+      mode: CONFORT
+
+remote:
+  priority: 2
+  devices:
+    heater_deskroom:
+      mode: CONFORT
+
+morning:
+  priority: 2
+  devices:
+    heater_kitchen:
+      mode: CONFORT
+    heater_livroom:
+      mode: CONFORT
+
+evening:
+  priority: 2
+  devices:
+    heater_livroom:
+      mode: CONFORT
+
+holidays:
+  priority: 2
+  devices:
+    heater_bedroom:
+      mode: HGEL
+    heater_kitchen:
+      mode: HGEL
+    heater_deskroom:
+      mode: HGEL
+    heater_livroom:
+      mode: HGEL

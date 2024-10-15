@@ -1,0 +1,8 @@
+[Unit]
+Description=Run get_schedules Docker Compose service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/docker-compose -f  %%INSTALL_PATH%%/docker-compose.yaml up get_schedules
+# use heatzy user to run it
+User=heatzy
