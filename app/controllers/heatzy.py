@@ -41,7 +41,7 @@ class HeatzyManager:
             credentials_file_path = credentials_source.split("file://")[1]
         elif credentials_source.startswith("env://"):
             env_var = os.getenv(credentials_source.split("env://")[1])
-            credentials_file_path = "~/heatzy_credentials.json"
+            credentials_file_path = "heatzy_credentials.json"
             with open(credentials_file_path, "w") as credentials_file:
                 credentials_file.write(env_var)
         else:
@@ -50,7 +50,7 @@ class HeatzyManager:
                 f"Invalid credentials source {credentials_source}, `file://` or `env://` not found."
             )
 
-        hz = HeatzyProvider(credentials_file_path.split("file://")[1])
+        hz = HeatzyProvider(credentials_file_path)
         hz.login()
         return hz
 

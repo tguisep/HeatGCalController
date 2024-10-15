@@ -4,3 +4,4 @@ outputs/*.json
 .idea
 .venv
 __pycache__
+.editorconfig

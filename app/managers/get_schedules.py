@@ -46,7 +46,7 @@ class ScheduleManager:
             credentials_file_path = credentials_source.split("file://")[1]
         elif credentials_source.startswith("env://"):
             env_var = os.getenv(credentials_source.split("env://")[1])
-            credentials_file_path = "~/google_credentials.json"
+            credentials_file_path = "google_credentials.json"
             with open(credentials_file_path, "w") as credentials_file:
                 credentials_file.write(env_var)
         else:

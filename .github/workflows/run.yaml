@@ -1,12 +1,6 @@
-name: Python App Workflow
+name: Python App Workflow HeatGCalController
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       dry-run:
