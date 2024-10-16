@@ -6,7 +6,11 @@ on:
       dry-run:
         description: 'Run the script in dry-run mode (true/false)'
         required: true
-        default: 'false'
+        default: true
+        type: choice
+        options:
+          - false
+          - true
       mode:
         description: 'Select mode to run the script'
         required: true
@@ -16,8 +20,8 @@ on:
           - all
           - get_schedules
           - set_heaters
-  schedule:
-    - cron: "*/5 * * * *"  # Runs every 5 minutes
+  #schedule:
+  #  - cron: "*/5 * * * *"  # Runs every 5 minutes
 
 env:
   GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
