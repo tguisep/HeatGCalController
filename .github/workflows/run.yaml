@@ -28,12 +28,19 @@ env:
   HEATZY_CREDENTIALS: ${{ secrets.HEATZY_CREDENTIALS }}
   STOVE_CREDENTIALS: ${{ secrets.STOVE_CREDENTIALS }}
 
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
   run-python-script:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y s3fs
+
       # Checkout the code from the repository
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -50,6 +57,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Configure AWS credentials for s3fs
+        run: |
+          echo "${{ secrets.AWS_ACCESS_KEY_ID }}:${{ secrets.AWS_SECRET_ACCESS_KEY }}" > $HOME/.passwd-s3fs
+          chmod 600 $HOME/.passwd-s3fs
+
+      - name: Create mount point and mount S3 bucket
+        run: |
+          mkdir -p mnt/s3
+          s3fs ${{ secrets.S3_BUCKET_NAME }} mnt/s3 -o passwd_file=$HOME/.passwd-s3fs -o url=https://s3.${{ secrets.AWS_REGION }}.amazonaws.com -o use_path_request_style
+
       # Run the Python script with or without --dry-run based on input
       - name: Run main.py with dry-run option
         run: |
@@ -61,3 +78,7 @@ jobs:
             echo "Running in normal mode"
             python3 app/main.py --mode "$MODE"
           fi
+
+      - name: Unmount S3 bucket
+        run: |
+          fusermount -u mnt/s3
