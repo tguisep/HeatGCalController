@@ -1,55 +1,59 @@
 ---
 # Default values applied
 # All devices must be defined here
-# THIS IS A EXAMPLE FILE, DEVICE NAME MUST BE ADJUSTED TO YOUR HEATZY PILOTE CONFIGURATION
+# THIS IS A EXAMPLE FILE, DEVICE NAME MUST BE ADJUSTED TO YOUR HEATZY/STOVE DEVICE
 default:
-  # More a priority is high, less it is.
-  priority: 10
+  # More a priority is high, less priority the configuration is.
+  priority: 10 # We set a high priority to make sure than this configuration will be override
   devices:
     # heater_xyz is the name of your device defined in the app
     heater_bedroom:
+      type: heatzy
       mode: OFF
     heater_kitchen:
+      type: heatzy
       mode: OFF
     heater_deskroom:
+      type: heatzy
       mode: OFF
     heater_livroom:
+      type: stove
       mode: OFF
 
 # night / weekend is the mode than you must define in google calendar (title of the meeting)
 night:
-  priority: 1
+  priority: 3
   devices:
     heater_bedroom:
-      mode: CONFORT
+      mode: COMFORT
 
 weekend:
-  priority: 2
+  priority: 4
   devices:
     heater_kitchen:
-      mode: CONFORT
+      mode: COMFORT
     heater_livroom:
-      mode: CONFORT
+      mode: COMFORT
 
 remote:
-  priority: 2
+  priority: 4
   devices:
     heater_deskroom:
-      mode: CONFORT
+      mode: COMFORT
 
 morning:
-  priority: 2
+  priority: 4
   devices:
     heater_kitchen:
-      mode: CONFORT
+      mode: COMFORT
     heater_livroom:
-      mode: CONFORT
+      mode: COMFORT
 
 evening:
-  priority: 2
+  priority: 4
   devices:
     heater_livroom:
-      mode: CONFORT
+      mode: COMFORT
 
 holidays:
   priority: 2

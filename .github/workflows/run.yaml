@@ -6,7 +6,7 @@ on:
       dry-run:
         description: 'Run the script in dry-run mode (true/false)'
         required: true
-        default: true
+        default: false
         type: choice
         options:
           - false
@@ -27,9 +27,6 @@ env:
   GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
   HEATZY_CREDENTIALS: ${{ secrets.HEATZY_CREDENTIALS }}
   STOVE_CREDENTIALS: ${{ secrets.STOVE_CREDENTIALS }}
-
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
   run-python-script:
@@ -68,7 +65,7 @@ jobs:
           s3fs ${{ secrets.S3_BUCKET_NAME }} mnt/s3 -o passwd_file=$HOME/.passwd-s3fs -o url=https://s3.${{ secrets.AWS_REGION }}.amazonaws.com -o use_path_request_style
 
       # Run the Python script with or without --dry-run based on input
-      - name: Run main.py with dry-run option
+      - name: Run main.py
         run: |
           MODE="${{ github.event.inputs.mode }}"
           if [ "${{ github.event.inputs.dry-run }}" == "true" ]; then
