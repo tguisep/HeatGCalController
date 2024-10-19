@@ -6,7 +6,7 @@ on:
       dry-run:
         description: 'Run the script in dry-run mode (true/false)'
         required: true
-        default: true
+        default: false
         type: choice
         options:
           - false
@@ -20,16 +20,13 @@ on:
           - all
           - get_schedules
           - set_heaters
-  #schedule:
-  #  - cron: "*/5 * * * *"  # Runs every 5 minutes
+  schedule:
+    - cron: "*/5 * * * *"  # Runs every 5 minutes
 
 env:
   GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
   HEATZY_CREDENTIALS: ${{ secrets.HEATZY_CREDENTIALS }}
   STOVE_CREDENTIALS: ${{ secrets.STOVE_CREDENTIALS }}
-
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
   run-python-script:
@@ -68,15 +65,18 @@ jobs:
           s3fs ${{ secrets.S3_BUCKET_NAME }} mnt/s3 -o passwd_file=$HOME/.passwd-s3fs -o url=https://s3.${{ secrets.AWS_REGION }}.amazonaws.com -o use_path_request_style
 
       # Run the Python script with or without --dry-run based on input
-      - name: Run main.py with dry-run option
+      - name: Run main.py
         run: |
-          MODE="${{ github.event.inputs.mode }}"
-          if [ "${{ github.event.inputs.dry-run }}" == "true" ]; then
+          INPUT_MODE="${{ github.event.inputs.mode }}"
+          INPUT_DRY_RUN="${{ github.event.inputs.dry-run }}"
+          MODE=${INPUT_MODE:-"all"}
+          DRY_RUN=${INPUT_DRY_RUN:-"false"}
+          if [ "$DRY_RUN" == "true" ]; then
             echo "Running in dry-run mode"
-            python3 app/main.py --dry-run  --mode "$MODE"
+            python3 app/main.py --dry-run  --mode "$MODE" --configs mnt/s3/configs/main.yaml
           else
             echo "Running in normal mode"
-            python3 app/main.py --mode "$MODE"
+            python3 app/main.py --mode "$MODE" --configs mnt/s3/configs/main.yaml
           fi
 
       - name: Unmount S3 bucket

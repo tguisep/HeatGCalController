@@ -1,6 +1,9 @@
 credentials/*.json
-!credentials/*.example.json
-outputs/*.json
+configs/*.yaml
+configs/*.yml
+outputs/logs/**
+outputs/last-status.json
+outputs/schedules.json
 .idea
 .venv
 __pycache__

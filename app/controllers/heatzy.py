@@ -106,7 +106,7 @@ class HeatzyManager:
                 continue
 
             if self.use_tempo and red_time:
-                device_params['mode'] = "HGEL"
+                device_params['mode'] = "OFF"
                 self.logger.info(f"EDF Tempo Red Time detected, setting {device} status to {device_params['mode']}")
 
             device_id = self.hz.alias_to_device_id(device)

@@ -116,19 +116,22 @@ class HeaterManager:
         # Apply settings for Stove devices
         status_devices_stove = {}
         if "stove" in set_heaters_configs["providers"]:
-            try:
-                stove_manager = StoveManager(
-                    self.configs['set_heaters']["providers"]["stove"],
-                    max_delay_reapplied, logger=self.logger
-                )
-                stove_manager.dry_run = self.dry_run
-                status_devices_stove = stove_manager.run_stove_devices(
-                    merged_schedule, last_status
-                )
-            except Exception as err:
-                self.logger.error(f"Could not start NOBIS services: {err}")
-                self.logger.error(f"Make sure than your device is connected properly.")
-                self.logger.error(traceback.format_exc())
+            if set_heaters_configs["providers"]["stove"]['enabled']:
+                try:
+                    stove_manager = StoveManager(
+                        self.configs['set_heaters']["providers"]["stove"],
+                        max_delay_reapplied, logger=self.logger
+                    )
+                    stove_manager.dry_run = self.dry_run
+                    status_devices_stove = stove_manager.run_stove_devices(
+                        merged_schedule, last_status
+                    )
+                except Exception as err:
+                    self.logger.error(f"Could not start NOBIS services: {err}")
+                    self.logger.error(f"Make sure than your device is connected properly.")
+                    self.logger.error(traceback.format_exc())
+        else:
+            self.logger.info("Stove devices not enabled.")
 
         # Save last status
         last_status_file_path = set_heaters_configs["inputs"]["status"]
